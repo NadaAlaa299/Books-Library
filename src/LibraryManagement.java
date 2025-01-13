@@ -1,50 +1,24 @@
-import java.util.ArrayList;
-import java.util.List;
+public class LibraryManagement
+{
+    private final Adder bookAdder;
+    private final Viewer bookViewer;
+    private final Searcher bookSearcher;
 
-public class LibraryManagement {
-    private List<Book> booksList = new ArrayList<>();
-
-    public void addBook(Book book)
-    {
-        booksList.add(book);
+    public LibraryManagement(Adder bookAdder, Viewer bookViewer, Searcher bookSearcher) {
+        this.bookAdder = bookAdder;
+        this.bookViewer = bookViewer;
+        this.bookSearcher = bookSearcher;
     }
 
-    public void viewBooks()
-    {
-        if (booksList.isEmpty())
-        {
-            System.out.println("No books in the library.");
-        }
-        else
-        {
-            System.out.println("Available Books: ");
-            for (Book book : booksList) {
-                System.out.println("Book ID: "+ book.getId());
-                System.out.println("Book Name: "+ book.getTitle());
-                System.out.println("Author Name: "+ book.getAuthor());
-                System.out.println();
-            }
-        }
-
+    public void addBook(Book book) {
+        bookAdder.addBook(book);
     }
 
-    public void searchBook(String bookTitle)
-    {
-        boolean found = true;
-        for (Book book : booksList) {
-            if (book.getTitle().equalsIgnoreCase(bookTitle))
-            {
-                found = false;
-                System.out.println("Book found");
-                System.out.println("Book ID: "+ book.getId());
-                System.out.println("Book Name: "+ book.getTitle());
-                System.out.println("Author Name: "+ book.getAuthor());
-                break;
-            }
-        }
-        if (found)
-        {
-            System.out.println("Book not found");
-        }
+    public void viewBooks() {
+        bookViewer.viewBooks();
+    }
+
+    public void searchBook(String title) {
+        bookSearcher.searchBook(title);
     }
 }

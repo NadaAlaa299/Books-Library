@@ -1,12 +1,17 @@
 import java.util.*;
-
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        LibraryManagement manager = new LibraryManagement();
+        List<Book> books = new ArrayList<>();
+        Validator bookValidator = new BookValidator(books);
 
-        while (true)
-        {
+        Adder bookAdder = new BookAdder(bookValidator, books);
+        Viewer bookViewer = new BookViewer(books);
+        Searcher bookSearcher = new BookSearcher(books);
+
+        LibraryManagement manager = new LibraryManagement(bookAdder, bookViewer, bookSearcher);
+
+        while (true) {
             System.out.println("\n< Library Management System >");
             System.out.println("1) Add Book");
             System.out.println("2) View Books");
@@ -29,7 +34,6 @@ public class Main {
 
                         Book book = new Book(id, bookTitle, author);
                         manager.addBook(book);
-                        System.out.println("Book added successfully");
                         break;
                     case 2:
                         manager.viewBooks();
@@ -45,9 +49,9 @@ public class Main {
                     default:
                         System.out.println("Invalid choice. Please try again.");
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("An error occurred: " + e.getMessage());
+                scanner.nextLine();
             }
         }
     }
